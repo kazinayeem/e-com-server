@@ -1,7 +1,9 @@
 import User from "../model/user.mode.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { sendMailConfig } from "../config/sendMail.js";
+import { accessTokenGenerator } from "../config/accessTokenGen.js";
+import { refreshTokenGenerator } from "../config/refreshTokenGen.js";
+
 export const userRegisterController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -73,14 +75,21 @@ export const userlogincontroller = async (req, res) => {
             email: user.email,
             id: user._id,
           };
-          const token = await jwt.sign(payload, process.env.SECRECT_TOKEN, {
-            expiresIn: "1h",
-          });
+          const accessToken = await accessTokenGenerator(payload);
+          const refreshToken = await refreshTokenGenerator(payload);
+          const cookieOption = {
+            http: true,
+            secure: true,
+            sameSite: "None",
+          };
+          res.cookie("accessToken", accessToken, cookieOption);
+          res.cookie("refreshToken", refreshToken, cookieOption);
           return res.status(200).json({
             message: "Login in successfull",
             error: false,
             success: true,
-            token: "Bearer " + token,
+            accessToken: "Bearer " + accessToken,
+            refreshToken: "Bearer " + refreshToken,
           });
         } else {
           return res.status(200).json({
@@ -139,6 +148,25 @@ export const validationUser = async (req, res) => {
         activeduser,
       });
     }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "server error",
+      error: true,
+      success: false,
+    });
+  }
+};
+
+export const seealluserController = async (req, res) => {
+  try {
+    const user = await User.find();
+    return res.status(500).json({
+      totaluser: user.length,
+      error: false,
+      success: true,
+      user: user,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({

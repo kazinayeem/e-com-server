@@ -1,7 +1,6 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-
 import connectDB from "./config/connectDB.js";
 import UserRouter from "./routes/user.router.js";
 import dotenv from "dotenv";
@@ -26,7 +25,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/v1/", UserRouter);
+app.use("/api/v1/user", UserRouter);
+app.use("/api/v1/product", UserRouter);
 
 app.use(function (req, res, next) {
   res.status(404);
