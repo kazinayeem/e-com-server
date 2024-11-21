@@ -80,7 +80,7 @@ export const userlogincontroller = async (req, res) => {
             message: "Login in successfull",
             error: false,
             success: true,
-            token: token,
+            token: "Bearer " + token,
           });
         } else {
           return res.status(200).json({
