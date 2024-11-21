@@ -176,3 +176,27 @@ export const seealluserController = async (req, res) => {
     });
   }
 };
+
+export const LogOutController = (req, res, next) => {
+  try {
+    const cookieOption = {
+      http: true,
+      secure: true,
+      sameSite: "None",
+    };
+    res.clearCookie("accessToken", cookieOption);
+    res.clearCookie("refreshToken", cookieOption);
+    return res.status(200).json({
+      message: "Logout successfull",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "server error",
+      error: true,
+      success: false,
+    });
+  }
+};

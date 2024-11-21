@@ -6,7 +6,7 @@ export const checkAdmin = async (req, res, next) => {
   try {
     if (token) {
       const maintoken = token.split(" ")[1];
-      const { id } = jwt.verify(maintoken, process.env.SECRECT_TOKEN);
+      const { id } = await jwt.verify(maintoken, process.env.SECRECT_TOKEN);
       const user = await User.findOne({ _id: id });
       if (user.role === "ADMIN") {
         next();

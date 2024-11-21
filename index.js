@@ -4,10 +4,12 @@ import cors from "cors";
 import connectDB from "./config/connectDB.js";
 import UserRouter from "./routes/user.router.js";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 const port = 5000;
+app.use(cookieParser());
 const PORT = process.env.PORT || port;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
