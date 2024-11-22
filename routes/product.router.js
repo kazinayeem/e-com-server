@@ -3,6 +3,7 @@ import {
   createProductController,
   getAllProductController,
   getASingleProductController,
+  deleteProductController,
 } from "../controller/product.controller.js";
 import { checkAdmin } from "../middleware/checkAdmin.js";
 import { checkLogin } from "../middleware/checkLogin.js";
@@ -18,6 +19,13 @@ router.post(
   checkLogin,
   upload.array("files"),
   createProductController
+);
+router.delete(
+  "/:id",
+  checkAdmin,
+  checkLogin,
+  upload.array("files"),
+  deleteProductController
 );
 
 export default router;
