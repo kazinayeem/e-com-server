@@ -24,7 +24,6 @@ router.delete(
   "/:id",
   checkAdmin,
   checkLogin,
-  upload.array("files"),
   deleteProductController
 );
 

@@ -2,9 +2,10 @@ import Product from "../model/product.model.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+
 export const getAllProductController = async (req, res) => {
   try {
-    const product = await Product.find();
+    const product = await Product.find().populate("categoryId").populate("sub_categoryId");
     return res.status(200).json({
       product,
       error: false,
@@ -12,7 +13,7 @@ export const getAllProductController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.status(400).json({
       message: "server error",
       error: true,
       success: false,
@@ -42,7 +43,6 @@ export const createProductController = async (req, res) => {
   try {
     const {
       name,
-      image = [],
       categoryId = [],
       sub_categoryId = [],
       unit,
@@ -55,7 +55,6 @@ export const createProductController = async (req, res) => {
     } = req.body;
 
     const photo = req.files;
-
     const photoName = photo.map((p) => p.filename);
 
     if (!name || !unit || stock === undefined || price === undefined) {
@@ -128,6 +127,3 @@ export const deleteProductController = async (req, res) => {
     });
   }
 };
-
-
-
