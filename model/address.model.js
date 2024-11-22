@@ -26,6 +26,10 @@ const addressSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   {
     timestamps: true,

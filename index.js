@@ -6,6 +6,7 @@ import UserRouter from "./routes/user.router.js";
 import productRouter from "./routes/product.router.js";
 import categoryRouter from "./routes/category.router.js";
 import subcategoryRouter from "./routes/subcategory.router.js";
+import addressRouter from "./routes/address.router.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 dotenv.config();
@@ -35,6 +36,7 @@ app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/subcategory", subcategoryRouter);
+app.use("/api/v1/address", addressRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -33,7 +33,7 @@ export const userRegisterController = async (req, res) => {
     const newUser = new User(payload);
     const result = await newUser.save();
 
-    const link = `http://localhost:5000/api/v1/activeuser/${result._id}`;
+    const link = `http://localhost:5000/api/v1/user/activeuser/${result._id}`;
     await sendMailConfig(email, "active link", link, link)
       .then(() => {
         return res.status(201).json({
