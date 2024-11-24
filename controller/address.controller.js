@@ -35,7 +35,7 @@ export const createAddressController = async (req, res) => {
     await User.findOneAndUpdate(
       { _id: res.user.id },
       {
-        $set: {
+        $push: {
           address_details: result._id,
         },
       },

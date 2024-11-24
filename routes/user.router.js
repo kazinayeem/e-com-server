@@ -16,7 +16,7 @@ const router = express.Router();
 router.post("/register", userRegisterController);
 router.post("/login", userlogincontroller);
 router.post("/logout", checkLogin, LogOutController);
-router.post("/alluser", checkAdmin, seealluserController);
+router.get("/alluser", checkAdmin, seealluserController);
 router.get("/activeuser/:id", validationUser);
 router.post("/forgotpassword/", SendOtpController);
 router.post("/checkotp/", CheckOtpController);
