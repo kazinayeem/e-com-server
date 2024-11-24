@@ -8,3 +8,6 @@ image
 
 /uploads
 uploads
+
+.env
+/.env
