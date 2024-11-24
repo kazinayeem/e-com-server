@@ -12,7 +12,6 @@ async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
     
-      useUnifiedTopology: true,
       writeConcern: { w: "majority" },
     });
     console.log("database connected");
