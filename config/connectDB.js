@@ -10,14 +10,16 @@ if (!process.env.MONGODB_URL) {
 
 async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGODB_URL);
-    console.log("database connected");
+    await mongoose.connect(process.env.MONGODB_URL, {
     
+      useUnifiedTopology: true,
+      writeConcern: { w: "majority" },
+    });
+    console.log("database connected");
   } catch (error) {
     console.log("server error ", error);
     process.exit(1);
   }
 }
-
 
 export default connectDB;
