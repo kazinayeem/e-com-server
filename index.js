@@ -42,13 +42,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.message });
 });
-
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log("server is running ", PORT);
-    });
-  })
-  .catch(() => {
-    console.log("Database error");
-  });
+app.listen(PORT, () => {
+  console.log("server is running ", PORT);
+  connectDB();
+});
