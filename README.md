@@ -638,6 +638,137 @@ This documentation provides details about the **Address API**, including availab
 ---
 
 
+# OTP and Password Management API
+
+This document provides details about the OTP-based verification process and how to reset the password securely.
+
+---
+
+## API Endpoints
+
+| Method | Endpoint              | Description                | Authentication |
+|--------|------------------------|----------------------------|----------------|
+| POST   | `/api/v1/user/otp/send`     | Send OTP to user's email   | None           |
+| POST   | `/api/v1/user/otp/verify`   | Verify the OTP             | None           |
+| PUT   | `/api/v1/user/password/reset` | Reset password using OTP  | None           |
+
+---
+
+## Postman API Testing
+
+### 1. **Send OTP**
+   - **Method:** `POST`
+   - **URL:** `http://localhost:5000/api/v1/otp/send`
+   - **Headers:**
+     - Content-Type: `application/json`
+   - **Body (JSON):**
+     ```json
+     {
+       "email": "user@example.com"
+     }
+     ```
+   - **Expected Response:**
+     - **Status: 200 OK**
+       ```json
+       {
+         "message": "OTP send successfull check your mail",
+         "error": false,
+         "success": true
+       }
+       ```
+     - **Status: 400 Bad Request**
+       ```json
+       {
+         "message": "user not found",
+         "error": true,
+         "success": false
+       }
+       ```
+
+---
+
+### 2. **Verify OTP**
+   - **Method:** `POST`
+   - **URL:** `http://localhost:5000/api/v1/otp/verify`
+   - **Headers:**
+     - Content-Type: `application/json`
+   - **Body (JSON):**
+     ```json
+     {
+       "email": "user@example.com",
+       "otp": "123456"
+     }
+     ```
+   - **Expected Response:**
+     - **Status: 200 OK (OTP matched)**
+       ```json
+       {
+         "message": "otp match",
+         "error": false,
+         "success": true
+       }
+       ```
+     - **Status: 400 Bad Request (OTP expired)**
+       ```json
+       {
+         "message": "otp expiy",
+         "error": false,
+         "success": true
+       }
+       ```
+     - **Status: 400 Bad Request (OTP not matched)**
+       ```json
+       {
+         "message": "otp not match",
+         "error": true,
+         "success": false
+       }
+       ```
+
+---
+
+### 3. **Reset Password**
+   - **Method:** `POST`
+   - **URL:** `http://localhost:5000/api/v1/password/reset`
+   - **Headers:**
+     - Content-Type: `application/json`
+   - **Body (JSON):**
+     ```json
+     {
+       "email": "user@example.com",
+       "password": "newpassword123"
+     }
+     ```
+   - **Expected Response:**
+     - **Status: 200 OK**
+       ```json
+       {
+         "message": "password change successfull",
+         "error": false,
+         "success": true
+       }
+       ```
+     - **Status: 400 Bad Request**
+       ```json
+       {
+         "message": "user not found",
+         "error": true,
+         "success": false
+       }
+       ```
+     - **Status: 500 Internal Server Error**
+       ```json
+       {
+         "message": "server error",
+        "error": true,
+         "success": false
+       }
+       ```
+
+---
+
+
+
 
 
 
