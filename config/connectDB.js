@@ -10,17 +10,15 @@ dotenv.config();
 
 async function connectDB() {
   try {
-    const url = "mongodb+srv://kazinayeem55085:zkdpuzYARJaZ5s0x@e-com.anq1k.mongodb.net/?retryWrites=true&w=majority&appName=e-com"
+    const url =
+      "mongodb+srv://kazinayeem55085:zkdpuzYARJaZ5s0x@e-com.anq1k.mongodb.net/?retryWrites=true&w=majority&appName=e-com";
 
-    
-    await mongoose.connect(url, {
-    
+    await mongoose.connect(process.env.MONGODB_URL, {
       writeConcern: { w: "majority" },
     });
     console.log("database connected");
   } catch (error) {
     console.log("server error :", error);
-   
   }
 }
 

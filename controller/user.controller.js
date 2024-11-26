@@ -161,8 +161,11 @@ export const validationUser = async (req, res) => {
 
 export const seealluserController = async (req, res) => {
   try {
-    const user = await User.find();
-    return res.status(500).json({
+    const user = await User.find()
+      .populate("shopping_card")
+      .populate("")
+      .populate("address_details");
+    return res.status(200).json({
       totaluser: user.length,
       error: false,
       success: true,
