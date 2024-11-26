@@ -769,6 +769,104 @@ This document provides details about the OTP-based verification process and how 
 
 
 
+# Shopping Cart API
 
+The Shopping Cart API enables users to manage their shopping cart by adding products, updating quantities, and removing products. It includes user authentication for secure operations.
+
+---
+
+## Features
+
+- Add products to the cart.
+- Update the quantity of products in the cart.
+- Remove products from the cart.
+- Secure user authentication to protect cart operations.
+
+---
+
+## Technologies Used
+
+- **Node.js**: JavaScript runtime for building scalable server-side applications.
+- **Express.js**: Web framework for creating APIs.
+- **MongoDB**: NoSQL database for storing user and cart data.
+- **Mongoose**: MongoDB object modeling tool for managing data.
+- **JWT (JSON Web Token)**: Token-based authentication for user verification.
+
+---
+
+## API Endpoints
+
+| Method   | Endpoint             | Description                     | Authentication |
+|----------|-----------------------|---------------------------------|----------------|
+| `POST`   | `/api/v1/cart/add`    | Adds a product to the cart      | Required       |
+| `DELETE` | `/api/v1/cart/remove` | Removes a product from the cart | Required       |
+
+---
+
+
+
+1. Add Product to Cart
+Method: POST
+URL: http://localhost:5000/api/v1/cart/add
+Headers:
+Content-Type: application/json
+Authorization: Bearer <your-token>
+Body (JSON):
+json
+Copy code
+{
+  "productId": "12345",
+  "quantity": 2
+}
+Expected Response:
+Status: 200 OK
+json
+Copy code
+{
+  "message": "Product added to cart successfully",
+  "cartProduct": {
+    "_id": "abc123",
+    "productId": "12345",
+    "quantity": 2,
+    "userId": "user123",
+    "__v": 0
+  }
+}
+Status: 500 Internal Server Error
+json
+Copy code
+{
+  "message": "Error adding product to cart",
+  "error": "<error-message>"
+}
+
+2. Remove Product from Cart
+Method: DELETE
+URL: http://localhost:5000/api/v1/cart/remove
+Headers:
+Content-Type: application/json
+Authorization: Bearer <your-token>
+Body (JSON):
+json
+Copy code
+{
+  "productId": "12345",
+  "quantity": 1
+}
+Expected Response:
+Status: 200 OK
+json
+Copy code
+{
+  "message": "Product removed from cart successfully",
+  "quantity": 1
+}
+Status: 500 Internal Server Error
+json
+Copy code
+{
+  "message": "Error removing product from cart",
+  "error": "<error-message>"
+}
 
 
