@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     varify_email: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     last_login_Date: {
       type: Date,
@@ -74,7 +74,7 @@ const userSchema = new mongoose.Schema(
     },
     isvalidator: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   { timestamps: true }

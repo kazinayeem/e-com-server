@@ -5,14 +5,16 @@ import { fileURLToPath } from "url";
 
 export const getAllProductController = async (req, res) => {
   try {
-    const product = await Product.find().populate("categoryId").populate("sub_categoryId");
+    const product = await Product.find()
+      .populate("categoryId")
+      .populate("sub_categoryId");
     return res.status(200).json({
       product,
       error: false,
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -23,14 +25,16 @@ export const getAllProductController = async (req, res) => {
 
 export const getASingleProductController = async (req, res) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id });
+    const product = await Product.findOne({ _id: req.params.id })
+      .populate("categoryId")
+      .populate("sub_categoryId");
     return res.status(200).json({
       product,
       error: false,
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -85,7 +89,7 @@ export const createProductController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -113,13 +117,12 @@ export const deleteProductController = async (req, res) => {
     });
 
     await Product.deleteOne({ _id: req.params.id });
-    return res.status(500).json({
+    return res.status(200).json({
       message: "delete successfull",
       error: false,
       success: true,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,

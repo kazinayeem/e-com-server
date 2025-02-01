@@ -17,7 +17,7 @@ router.post(
   "/",
   checkAdmin,
   checkLogin,
-  upload.array("files"),
+  upload.array("image",10),
   createProductController
 );
 router.delete(

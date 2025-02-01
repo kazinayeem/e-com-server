@@ -10,7 +10,7 @@ export const getAllAddressController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -47,7 +47,7 @@ export const createAddressController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(500).json({
       message: "server error",
       error: true,

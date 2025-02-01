@@ -52,7 +52,7 @@ const productSchema = new mongoose.Schema(
     },
     publish: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   {

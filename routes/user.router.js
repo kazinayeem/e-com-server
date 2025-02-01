@@ -7,6 +7,7 @@ import {
   LogOutController,
   SendOtpController,
   CheckOtpController,
+  SingleUser,
 } from "../controller/user.controller.js";
 import { checkAdmin } from "../middleware/checkAdmin.js";
 import { checkLogin } from "../middleware/checkLogin.js";
@@ -21,5 +22,6 @@ router.get("/activeuser/:id", validationUser);
 router.post("/forgotpassword/", SendOtpController);
 router.post("/checkotp/", CheckOtpController);
 router.put("/changepassword/", CheckOtpController);
+router.get("/:id/", SingleUser);
 
 export default router;

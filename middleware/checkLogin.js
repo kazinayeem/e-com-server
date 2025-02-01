@@ -23,7 +23,7 @@ export const checkLogin = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
+
     return res.status(400).json({
       message: "token not found or expired",
       success: false,

@@ -5,6 +5,33 @@ import { accessTokenGenerator } from "../config/accessTokenGen.js";
 import { refreshTokenGenerator } from "../config/refreshTokenGen.js";
 import { otpGen } from "../config/otpGenetor.js";
 
+export const SingleUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findOne({ _id: id })
+      .populate("address_details")
+      .populate("shopping_card");
+    if (user) {
+      return res.status(200).json({
+        user: user,
+        error: false,
+        success: true,
+      });
+    }
+    return res.status(400).json({
+      message: "user not found",
+      error: true,
+      success: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "server error",
+      error: true,
+      success: false,
+    });
+  }
+};
+
 export const userRegisterController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -34,20 +61,25 @@ export const userRegisterController = async (req, res) => {
     const newUser = new User(payload);
     const result = await newUser.save();
 
-    const link = `${process.env.URL}/api/v1/user/activeuser/${result._id}`;
-    await sendMailConfig(email, "active link", link, link)
-      .then(() => {
-        return res.status(201).json({
-          data: result,
-          success: true,
-          error: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return res.status(201).json({
+      data: result,
+      success: true,
+      error: false,
+    });
+
+    // const link = `${process.env.URL}/api/v1/user/activeuser/${result._id}`;
+    // await sendMailConfig(email, "active link", link, link)
+    //   .then(() => {
+    //     return res.status(201).json({
+    //       data: result,
+    //       success: true,
+    //       error: false,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //
+    //   });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -58,8 +90,8 @@ export const userRegisterController = async (req, res) => {
 
 export const userlogincontroller = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    const { email, password } = req.body;
+    if (!email || !password) {
       return res.status(400).json({
         message: "please provide name , email , and password",
         error: true,
@@ -75,6 +107,7 @@ export const userlogincontroller = async (req, res) => {
             name: user.name,
             email: user.email,
             id: user._id,
+            role: user.role,
           };
           const accessToken = await accessTokenGenerator(payload);
           const refreshToken = await refreshTokenGenerator(payload);
@@ -91,12 +124,13 @@ export const userlogincontroller = async (req, res) => {
             success: true,
             accessToken: "Bearer " + accessToken,
             refreshToken: "Bearer " + refreshToken,
+            user: payload,
           });
         } else {
-          return res.status(200).json({
+          return res.status(400).json({
             message: "please check your mail and active your account",
             error: false,
-            success: true,
+            success: false,
           });
         }
       } else {
@@ -114,7 +148,6 @@ export const userlogincontroller = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -150,7 +183,6 @@ export const validationUser = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -172,7 +204,6 @@ export const seealluserController = async (req, res) => {
       user: user,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -196,7 +227,6 @@ export const LogOutController = (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -231,7 +261,6 @@ export const SendOtpController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -274,7 +303,6 @@ export const CheckOtpController = async (req, res) => {
       success: false,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,
@@ -301,7 +329,6 @@ export const changePasswordController = async (req, res) => {
       success: false,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "server error",
       error: true,

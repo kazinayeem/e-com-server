@@ -11,7 +11,7 @@ export const getAllCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+ 
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -29,7 +29,7 @@ export const getAsingleCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+  
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -51,7 +51,7 @@ export const createCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+   
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -85,7 +85,6 @@ export const deleteCategoryController = async (req, res) => {
       success: false,
     });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({
       message: "server error",
       error: true,

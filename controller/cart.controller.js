@@ -1,7 +1,6 @@
 import User from "../model/user.mode.js";
 import CartProduct from "../model/cart.model.js";
 
-
 export const addToCart = async (req, res) => {
   const { productId, quantity } = req.body;
   try {
@@ -52,6 +51,25 @@ export const removeFromCart = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Error removing product from cart",
+      error: error.message,
+    });
+  }
+};
+
+// shoow cart items
+export const showCart = async (req, res) => {
+  const userId = res.user.id;
+  try {
+    const cartProducts = await CartProduct.find({ userId }).populate(
+      "productId"
+    );
+    return res.status(200).json({
+      message: "Cart items retrieved successfully",
+      cartProducts,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error retrieving cart items",
       error: error.message,
     });
   }

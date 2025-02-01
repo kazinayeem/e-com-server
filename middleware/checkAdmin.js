@@ -18,7 +18,7 @@ export const checkAdmin = async (req, res, next) => {
         });
       }
     } else {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "token not found or expired",
         success: false,
         error: true,

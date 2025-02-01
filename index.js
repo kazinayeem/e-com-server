@@ -7,11 +7,9 @@ import productRouter from "./routes/product.router.js";
 import categoryRouter from "./routes/category.router.js";
 import subcategoryRouter from "./routes/subcategory.router.js";
 import addressRouter from "./routes/address.router.js";
-import cartRouter from "./routes/cart.router.js"
+import cartRouter from "./routes/cart.router.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-
-
 
 dotenv.config();
 
@@ -22,11 +20,13 @@ const PORT = process.env.PORT || port;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
-app.use(
-  cors({
-    origin: "",
-  })
-);
+
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(morgan("dev"));
 

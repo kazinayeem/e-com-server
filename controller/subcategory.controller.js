@@ -12,7 +12,7 @@ export const getAllSubCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -32,7 +32,7 @@ export const getSubAsingleCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -55,7 +55,7 @@ export const createSubCategoryController = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    
     return res.status(400).json({
       message: "server error",
       error: true,
@@ -86,7 +86,7 @@ export const deleteSubCategoryController = async (req, res) => {
       success: false,
     });
   } catch (error) {
-    console.log(error);
+    
     return res.status(400).json({
       message: "server error",
       error: true,

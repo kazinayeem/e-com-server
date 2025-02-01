@@ -1,5 +1,5 @@
 import express from "express";
-import { addToCart, removeFromCart } from "../controller/cart.controller.js";
+import { addToCart, removeFromCart, showCart } from "../controller/cart.controller.js";
 import { checkLogin } from "../middleware/checkLogin.js";
 
 
@@ -11,4 +11,6 @@ router.post("/add",checkLogin, addToCart);
 // Remove from cart
 router.delete("/remove",checkLogin, removeFromCart);
 
+// Show cart items
+router.get("/", checkLogin, showCart);
 export default router;
